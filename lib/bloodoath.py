@@ -5,3 +5,7 @@ class BloodOath:
         self.cult = cult
         self.follower = follower
         BloodOath.all.append( self )
+
+    @classmethod
+    def first_oath( cls ):
+        return cls.all[0].follower

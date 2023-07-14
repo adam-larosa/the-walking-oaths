@@ -21,9 +21,10 @@ class Cult:
         return [ bo for bo in BloodOath.all if bo.cult == self ]
 
     @property
-    def folllowers( self ):
+    def followers( self ):
         return list( { bo.follower for bo in self.oaths } )
 
+    @property
     def cult_population( self ):
         return len( self.followers )
 
@@ -36,18 +37,39 @@ class Cult:
 
     @classmethod
     def find_by_location( cls, query ):
-        cult_list = []
-        for cult in cls.all:
-            import ipdb; ipdb.set_trace()
-            if query.lower() in cult.location.lower():
-                cult_list.append( cult )
-        return cult_list
+        return [ c for c in cls.all if query.lower() in c.location.lower() ]
 
     @classmethod
     def find_by_founding_year( cls, query ):
-        cult_list = []
-        for cult in cls.all:
-            if query == cult.founding_year:
-                cult_list.append( cult )
-        return cult_list
+        return [ c for c in cls.all if query == c.founding_year ]
 
+    @property
+    def average_age( self ):
+        ages = sum( [ f.age for f in self.followers ] )
+        followers = len( self.followers )
+        return ages / followers
+
+    @property
+    def my_followers_mottos( self ):
+        for f in self.followers:
+            print( f.life_motto )
+
+    @classmethod
+    def least_popular( cls ):
+        by_population = lambda c : c.cult_population
+        return sorted( cls.all, key = by_population )[0]
+
+    @classmethod
+    def most_common_location( self ):
+        count = {}
+        for cult in Cult.all:
+            if count.get( cult.location ):
+                count[ cult.location ] += 1
+            else:
+                count[ cult.location ] = 1
+        return max( count, key = count.get )
+
+
+
+
+              

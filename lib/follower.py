@@ -14,7 +14,7 @@ class Follower:
 
     @property
     def cults( self ):
-        return [ o.cult for o in self.oaths ]
+        return list( { o.cult for o in self.oaths } )
 
     def join_cult( self, cult, time = 'right now' ):
         from .cult import Cult
@@ -25,9 +25,19 @@ class Follower:
     
     @classmethod
     def of_a_certain_age( cls, query ):
-        follower_list = []        
-        for follower in cls.all:
-            if follower.age >= query:
-                follower_list.append( follower )
-        return follower_list
+        return [ f for f in cls.all if f.age >= query ]
+
+    @property
+    def my_cults_slogans( self ):
+        for cult in self.cults:
+            print( cult.slogan )
+
+    @classmethod
+    def most_active( cls ):
+        return max( cls.all, key = lambda f : len( f.cults ) )
+
+    @classmethod
+    def top_ten( cls ):
+        by_cults = lambda f : len(f.cults)
+        return sorted( Follower.all, key = by_cults, reverse = True )[:10]
 

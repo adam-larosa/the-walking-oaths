@@ -13,20 +13,28 @@ from lib import *
 # c1.followers => ???
 # f1.cults => ???
 
-Cult( "Heaven's Gate", 'San Diego', 1974, 'Look to the stars!' )
-Cult( "People's Temple", 'San Francisco', 1954, 'We serve Kool-Aid.' )
+gate = Cult( "Heaven's Gate", 'San Diego', 1974, 'Look to the stars!' )
+town = Cult( "People's Temple", 'San Francisco', 1954, 'We serve Kool-Aid.' )
 Cult( 'Branch Davidians', 'Waco', 1955, 'Come and get it!' )
-Cult( 'Wizard Status', 'Seattle', 1997, 'Come and get it!' )
+wiz = Cult( 'Wizard Status', 'Seattle', 1997, 'Come and get it!' )
 Cult( 'Adamtown', 'San Francisco', 1997, 'COMPUTERLIFE' )
 
-Follower( 'Adam', 44, 'EDM & computers plz.' )
-Follower( 'Emiley', 27, 'Coffee is wonderful!' )
+adam = Follower( 'Adam', 44, 'EDM & computers plz.' )
+emiley = Follower( 'Emiley', 27, 'Coffee is wonderful!' )
 Follower( 'Ix', 31, '...abra Cadabra...' )
 
-adam = Follower.all[0]
+b1 = Follower( 'badcat1', 5, 'meow1' )
+b2 = Follower( 'badcat2', 5, 'meow1' )
+b3 = Follower( 'badcat3', 5, 'meow1' )
 
-town = Cult.all[-1]
+for f in [ b1, b2, b3 ]:
+    wiz.recruit_follower( f )
 
+for c in Cult.all:
+    c.recruit_follower( emiley )
+
+for c in [ gate, town ]:
+    c.recruit_follower( adam )
 
 print( "Mwahahaha!" )
 ipdb.set_trace()
