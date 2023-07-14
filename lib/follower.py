@@ -19,7 +19,10 @@ class Follower:
     def join_cult( self, cult, time = 'right now' ):
         from .cult import Cult
         if isinstance( cult, Cult ):
-            BloodOath( time, cult, self )
+            if self.age >= cult.minimum_age:
+                BloodOath( time, cult, self )
+            else:
+                print( 'We must wait a bit longer before we are ready' )
         else:
             return 'Argument not Cult object.'
     
@@ -41,3 +44,11 @@ class Follower:
         by_cults = lambda f : len(f.cults)
         return sorted( Follower.all, key = by_cults, reverse = True )[:10]
 
+    @property
+    def fellow_cult_members( self ):
+        fellows = set()
+        for cult in self.cults:
+            for follower in cult.followers:
+                if follower != self:
+                    fellows.add( follower )
+        return list( fellows )

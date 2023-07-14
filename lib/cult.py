@@ -3,16 +3,20 @@ from .follower import Follower
 
 class Cult:
     all = []
-    def __init__( self, name, location, founding_year, slogan ):
+    def __init__( self, name, location, founding_year, slogan, minimum_age ):
         self.name = name
         self.location = location
         self.founding_year = founding_year
         self.slogan = slogan
+        self.minimum_age = minimum_age
         Cult.all.append( self )
 
     def recruit_follower( self, follower, time = 'right now' ):
         if isinstance( follower, Follower ):
-            BloodOath( time, self, follower )
+            if follower.age >= self.minimum_age:
+                BloodOath( time, self, follower )
+            else:
+                print( 'Not yet young one, but now is not your time.' )
         else:
             return 'Argument not Follower object.'
     
@@ -34,6 +38,10 @@ class Cult:
             if query.lower() in cult.name.lower():
                 return cult
         return 'Cult not found'
+
+    @classmethod
+    def find_all_by_name( cls, query ):
+        return [ c for c in cls.all if query.lower() in c.name.lower() ]    
 
     @classmethod
     def find_by_location( cls, query ):

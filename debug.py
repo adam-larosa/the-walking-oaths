@@ -13,11 +13,11 @@ from lib import *
 # c1.followers => ???
 # f1.cults => ???
 
-gate = Cult( "Heaven's Gate", 'San Diego', 1974, 'Look to the stars!' )
-town = Cult( "People's Temple", 'San Francisco', 1954, 'We serve Kool-Aid.' )
-Cult( 'Branch Davidians', 'Waco', 1955, 'Come and get it!' )
-wiz = Cult( 'Wizard Status', 'Seattle', 1997, 'Come and get it!' )
-Cult( 'Adamtown', 'San Francisco', 1997, 'COMPUTERLIFE' )
+gate = Cult( "Heaven's Gate", 'San Diego', 1974, 'Look to the stars!', 18 )
+town = Cult( "People's Temple", 'San Francisco', 1954, 'Tasty Kool-Aid.', 18 )
+Cult( 'Branch Davidians', 'Waco', 1955, 'Come and get it!', 18 )
+wiz = Cult( 'Wizard Status', 'Seattle', 1997, 'Come and get it!', 5 )
+Cult( 'Adamtown', 'San Francisco', 1997, 'COMPUTERLIFE', 18 )
 
 adam = Follower( 'Adam', 44, 'EDM & computers plz.' )
 emiley = Follower( 'Emiley', 27, 'Coffee is wonderful!' )
