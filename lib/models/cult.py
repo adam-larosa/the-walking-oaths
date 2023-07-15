@@ -18,6 +18,24 @@ class Cult:
         self.minimum_age = minimum_age
         self.id = id
 
+    @property
+    def oaths( self ):
+        sql = '''
+            SELECT * FROM blood_oaths WHERE blood_oaths.cult_id = ?
+        '''
+        rows_from_db = cursor.execute( sql, ( self.id, ) ).fetchall()
+        return [ BloodOath.new_from_db( row ) for row in rows_from_db ]
+        
+    @property
+    def followers( self ):
+        sql = '''
+            SELECT DISTINCT followers.* FROM followers
+            JOIN blood_oaths ON blood_oaths.follower_id = followers.id
+            WHERE blood_oaths.cult_id = ?
+        '''
+        rows_from_db = cursor.execute( sql, ( self.id, ) ).fetchall()
+        return [ Follower.new_from_db( row ) for row in rows_from_db ]
+
 
     def recruit_follower( self, follower, time = 'right now' ):
         if isinstance( follower, Follower ):
@@ -90,24 +108,7 @@ class Cult:
         return cult
 
 
-    @property
-    def oaths( self ):
-        sql = '''
-            SELECT * FROM blood_oaths WHERE blood_oaths.cult_id = ?
-        '''
-        rows_from_db = cursor.execute( sql, ( self.id, ) ).fetchall()
-        return [ BloodOath.new_from_db( row ) for row in rows_from_db ]
-        
-    @property
-    def followers( self ):
-        sql = '''
-            SELECT DISTINCT followers.* FROM followers
-            JOIN blood_oaths ON blood_oaths.follower_id = followers.id
-            WHERE blood_oaths.cult_id = ?
-        '''
-        rows_from_db = cursor.execute( sql, ( self.id, ) ).fetchall()
-        return [ Follower.new_from_db( row ) for row in rows_from_db ]
-
+    
 
     @property
     def cult_population( self ):
