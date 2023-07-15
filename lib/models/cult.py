@@ -1,6 +1,10 @@
 
 from sqlalchemy import Column, Integer, String
-from lib.walkingdev import Base, session
+if 'lib' in __name__ :
+    from lib.walkingdev import Base, session
+else:
+    from walkingdev import Base, session
+
 from .bloodoath import BloodOath
 
 
@@ -12,6 +16,7 @@ class Cult( Base ):
     location = Column( String() )
     founding_year = Column( Integer() )
     slogan = Column( String() )
+    meow = Column( String() )
 
     @classmethod
     def all( cls ):
