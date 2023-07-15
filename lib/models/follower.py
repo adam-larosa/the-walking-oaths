@@ -1,6 +1,10 @@
 from config import cursor, connection
 from .bloodoath import BloodOath
 
+
+
+
+
 class Follower:
 
     def __init__( self, name, age, life_motto, id = None ):
