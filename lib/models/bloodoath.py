@@ -19,12 +19,12 @@ class BloodOath:
         return blood_oath
     
     def save( self ):
-        sql = '''
+        sql_string = '''
             INSERT INTO blood_oaths ( 
                 initiation_date, cult_id, follower_id ) VALUES ( ?, ?, ? )
         '''
-        params = ( self.initiation_date, self.cult_id, self.follower_id )
-        cursor.execute( sql, params )
+        params_tuple = ( self.initiation_date, self.cult_id, self.follower_id )
+        cursor.execute( sql_string, params_tuple )
         connection.commit()
         id_sql = 'SELECT last_insert_rowid() FROM blood_oaths'
         self.id = cursor.execute( id_sql ).fetchone()[0]
