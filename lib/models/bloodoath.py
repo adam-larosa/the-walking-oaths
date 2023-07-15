@@ -15,10 +15,9 @@ class BloodOath:
     @classmethod
     def create( cls, initiation_date, cult_id, follower_id ):
         blood_oath = cls( initiation_date, cult_id, follower_id )
-        blood_oath.save
+        blood_oath.save()
         return blood_oath
     
-    @property
     def save( self ):
         sql = '''
             INSERT INTO blood_oaths ( 
