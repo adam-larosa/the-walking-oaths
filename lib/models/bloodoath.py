@@ -14,7 +14,6 @@ class BloodOath:
         BloodOath.all.append( self )
 
 
-
     all = []
 
 
