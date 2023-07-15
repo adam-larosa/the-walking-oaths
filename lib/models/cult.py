@@ -24,6 +24,8 @@ class Cult:
 
 
 
+
+
     @property
     def followers( self ):
         return list( { bo.follower for bo in self.oaths } )
