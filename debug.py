@@ -1,5 +1,5 @@
 import ipdb
-from lib import *
+from lib.models import *
 
 # test your code here
 # e.g.
