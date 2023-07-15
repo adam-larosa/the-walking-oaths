@@ -49,11 +49,11 @@ class Cult:
                 name, location, founding_year, slogan, minimum_age 
             ) VALUES ( ?, ?, ?, ?, ? )
         '''
-        params = ( 
+        params_tuple = ( 
             self.name, self.location, self.founding_year, self.slogan, 
             self.minimum_age 
         )
-        cursor.execute( sql, params )
+        cursor.execute( sql, params_tuple )
         connection.commit()
         id_sql = 'SELECT last_insert_rowid() FROM cults'
         self.id = cursor.execute( id_sql ).fetchone()[0]
