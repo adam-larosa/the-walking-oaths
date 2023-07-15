@@ -1,3 +1,4 @@
+
 from sqlalchemy import Column, Integer, String
 from lib.walkingdev import Base, session
 
