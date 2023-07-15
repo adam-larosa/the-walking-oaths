@@ -1,3 +1,10 @@
+
+
+
+
+
+
+
 class BloodOath:
     all = []
     def __init__( self, initiation_date, cult, follower ):
