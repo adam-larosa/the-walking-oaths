@@ -9,7 +9,6 @@ from .follower import Follower
 
 
 class Cult:
-
     def __init__( self, name, location, founding_year, slogan, minimum_age, 
                   id = None ):
         self.name = name
