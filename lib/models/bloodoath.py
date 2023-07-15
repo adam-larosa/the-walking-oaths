@@ -11,6 +11,12 @@ class BloodOath:
         self.cult_id = cult_id
         self.follower_id = follower_id
         self.id = id
+
+    @classmethod
+    def all( cls ):
+        sql = 'SELECT * FROM blood_oaths'
+        rows_from_db = cursor.execute( sql ).fetchall()
+        return [ cls.new_from_db( row ) for row in rows_from_db ]
     
     @classmethod
     def create( cls, initiation_date, cult_id, follower_id ):
@@ -29,11 +35,7 @@ class BloodOath:
         id_sql = 'SELECT last_insert_rowid() FROM blood_oaths'
         self.id = cursor.execute( id_sql ).fetchone()[0]
 
-    @classmethod
-    def all( cls ):
-        sql = 'SELECT * FROM blood_oaths'
-        rows_from_db = cursor.execute( sql ).fetchall()
-        return [ cls.new_from_db( row ) for row in rows_from_db ]
+
     
     @classmethod
     def new_from_db( cls, row ):
