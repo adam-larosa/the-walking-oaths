@@ -12,7 +12,30 @@ class Follower:
         self.age = age
         self.life_motto = life_motto
         self.id = id
-        
+
+
+
+    @property
+    def oaths( self ):
+        sql = '''
+            SELECT * FROM blood_oaths WHERE blood_oaths.follower_id = ?
+        '''
+        rows_from_db = cursor.execute( sql, ( self.id, ) ).fetchall()
+        return [ BloodOath.new_from_db( row ) for row in rows_from_db ]
+
+    @property
+    def cults( self ):
+        from .cult import Cult
+        sql = '''
+            SELECT DISTINCT cults.* FROM cults
+            JOIN blood_oaths ON blood_oaths.cult_id = cults.id
+            WHERE blood_oaths.follower_id = ?
+        '''
+        rows_from_db = cursor.execute( sql, ( self.id, ) ).fetchall()
+        return [ Cult.new_from_db( row ) for row in rows_from_db ]
+
+
+
     @classmethod
     def create_table( cls ):
         sql = '''
@@ -63,24 +86,6 @@ class Follower:
         return follower
 
 
-    @property
-    def oaths( self ):
-        sql = '''
-            SELECT * FROM blood_oaths WHERE blood_oaths.follower_id = ?
-        '''
-        rows_from_db = cursor.execute( sql, ( self.id, ) ).fetchall()
-        return [ BloodOath.new_from_db( row ) for row in rows_from_db ]
-
-    @property
-    def cults( self ):
-        from .cult import Cult
-        sql = '''
-            SELECT DISTINCT cults.* FROM cults
-            JOIN blood_oaths ON blood_oaths.cult_id = cults.id
-            WHERE blood_oaths.follower_id = ?
-        '''
-        rows_from_db = cursor.execute( sql, ( self.id, ) ).fetchall()
-        return [ Cult.new_from_db( row ) for row in rows_from_db ]
 
     def join_cult( self, cult, time = 'right now' ):
         from .cult import Cult
