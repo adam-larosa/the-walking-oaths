@@ -22,7 +22,7 @@ class Cult:
     def recruit_follower( self, follower, time = 'right now' ):
         if isinstance( follower, Follower ):
             if follower.age >= self.minimum_age:
-                return BloodOath.create( time, self.id, follower.id )
+                BloodOath.create( time, self.id, follower.id )
             else:
                 print( 'Not yet young one, but now is not your time.' )
         else:
