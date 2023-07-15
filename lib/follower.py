@@ -101,9 +101,9 @@ class Follower:
             JOIN blood_oaths ON blood_oaths.cult_id = cults.id
             WHERE blood_oaths.follower_id = ?;
         '''
-        rows_from_db = cursor.execute( sql, ( self.id, ) ).fetchall()
-        for row_tuple in rows_from_db:
-            print( row_tuple[0] )
+        query_list = cursor.execute( sql, ( self.id, ) ).fetchall()
+        for query_tuple in query_list:
+            print( query_tuple[0] )
 
     @classmethod
     def most_active( cls ):
