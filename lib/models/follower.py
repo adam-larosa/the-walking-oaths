@@ -1,4 +1,4 @@
-from config import cursor, connection
+from lib.walkingdev import cursor, connection
 from .bloodoath import BloodOath
 
 

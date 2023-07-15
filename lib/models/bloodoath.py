@@ -1,4 +1,4 @@
-from config import cursor, connection
+from lib.walkingdev import cursor, connection
 
 class BloodOath:
     def __init__( self, initiation_date, cult_id, follower_id, id = None ):
