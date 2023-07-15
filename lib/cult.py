@@ -1,15 +1,79 @@
+from config import cursor, connection
 from .bloodoath import BloodOath
 from .follower import Follower
 
 class Cult:
-    all = []
-    def __init__( self, name, location, founding_year, slogan, minimum_age ):
+
+    def __init__( self, name, location, founding_year, slogan, minimum_age, 
+                  id = None ):
         self.name = name
         self.location = location
         self.founding_year = founding_year
         self.slogan = slogan
         self.minimum_age = minimum_age
-        Cult.all.append( self )
+        self.id = id
+
+    @classmethod
+    def create_table( cls ):
+        sql = '''
+            CREATE TABLE IF NOT EXISTS cults ( 
+                id INTEGER PRIMARY KEY,
+                name TEXT,
+                location TEXT,
+                founding_year INTEGER,
+                slogan TEXT,
+                minimum_age INTEGER
+            )
+        '''
+        cursor.execute( sql )
+
+    @classmethod
+    def drop_table( cls ):
+        cursor.execute( 'DROP TABLE cults' )
+
+    @classmethod
+    def erase_table( cls ):
+        cursor.execute( 'DELETE FROM cults' )
+        connection.commit()
+
+    @property
+    def save( self ):
+        sql = '''
+            INSERT INTO cults ( 
+                name, location, founding_year, slogan, minimum_age 
+            ) VALUES ( ?, ?, ?, ?, ? )
+        '''
+        params = ( 
+            self.name, self.location, self.founding_year, self.slogan, 
+            self.minimum_age 
+        )
+        cursor.execute( sql, params )
+        connection.commit()
+        id_sql = 'SELECT last_insert_rowid() FROM cults'
+        self.id = cursor.execute( id_sql ).fetchone()[0]
+
+    @classmethod
+    def create( cls, name, location, founding_year, slogan, minimum_age ):
+        cult = cls( name, location, founding_year, slogan, minimum_age )
+        cult.save
+        return cult
+
+    @classmethod
+    def new_from_db( cls, row ):
+        cult = cls( row[1], row[2], row[3], row[4], row[5] )
+        cult.id = row[0]
+        return cult
+
+# ---------------------bookmark, below is unported -------------------------
+
+    @property
+    def oaths( self ):
+        return [ bo for bo in BloodOath.all if bo.cult == self ]
+
+    @property
+    def followers( self ):
+        return list( { bo.follower for bo in self.oaths } )
+
 
     def recruit_follower( self, follower, time = 'right now' ):
         if isinstance( follower, Follower ):
@@ -19,14 +83,6 @@ class Cult:
                 print( 'Not yet young one, but now is not your time.' )
         else:
             return 'Argument not Follower object.'
-    
-    @property
-    def oaths( self ):
-        return [ bo for bo in BloodOath.all if bo.cult == self ]
-
-    @property
-    def followers( self ):
-        return list( { bo.follower for bo in self.oaths } )
 
     @property
     def cult_population( self ):
