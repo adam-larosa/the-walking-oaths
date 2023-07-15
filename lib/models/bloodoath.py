@@ -6,13 +6,13 @@ from lib.walkingdev import cursor, connection
 
 
 class BloodOath:
+
     def __init__( self, initiation_date, cult_id, follower_id, id = None ):
         self.initiation_date = initiation_date
         self.cult_id = cult_id
         self.follower_id = follower_id
         self.id = id
 
-    
     @classmethod
     def all( cls ):
         sql = 'SELECT * FROM blood_oaths'
