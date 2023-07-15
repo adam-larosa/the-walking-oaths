@@ -1,2 +1,0 @@
-class BloodOath:
-    pass
