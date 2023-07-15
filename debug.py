@@ -1,5 +1,6 @@
 import ipdb
-from lib.models import session, Cult, Follower, BloodOath
+from lib.walkingdev import session
+from lib.models import *
 
 
 
