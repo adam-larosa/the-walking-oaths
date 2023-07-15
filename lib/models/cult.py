@@ -9,3 +9,7 @@ class Cult( Base ):
     location = Column( String() )
     founding_year = Column( Integer() )
     slogan = Column( String() )
+
+    @classmethod
+    def all( cls ):
+        return session.query( cls ).all()

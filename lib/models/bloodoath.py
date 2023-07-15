@@ -8,3 +8,7 @@ class BloodOath( Base ):
     initiation_date = Column( String() )
     cult_id = Column( Integer() )
     follower_id = Column( Integer() )
+
+    @classmethod
+    def all( cls ):
+        return session.query( cls ).all()
