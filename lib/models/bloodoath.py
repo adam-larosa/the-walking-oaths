@@ -1,5 +1,10 @@
 from lib.walkingdev import cursor, connection
 
+
+
+
+
+
 class BloodOath:
     def __init__( self, initiation_date, cult_id, follower_id, id = None ):
         self.initiation_date = initiation_date
