@@ -18,7 +18,10 @@ class BloodOath:
         sql = 'SELECT * FROM blood_oaths'
         rows_from_db = cursor.execute( sql ).fetchall()
         return [ cls.new_from_db( row ) for row in rows_from_db ]
-    
+
+
+
+
     @classmethod
     def create( cls, initiation_date, cult_id, follower_id ):
         blood_oath = cls( initiation_date, cult_id, follower_id )
