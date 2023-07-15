@@ -1,5 +1,10 @@
 from .bloodoath import BloodOath
 
+
+
+
+
+
 class Follower:
     all = []
     def __init__( self, name, age, life_motto ):
