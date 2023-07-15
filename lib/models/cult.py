@@ -18,6 +18,7 @@ class Cult:
         self.minimum_age = minimum_age
         Cult.all.append( self )
 
+    
     def recruit_follower( self, follower, time = 'right now' ):
         if isinstance( follower, Follower ):
             if follower.age >= self.minimum_age:
