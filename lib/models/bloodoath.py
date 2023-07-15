@@ -6,6 +6,36 @@ class BloodOath:
         self.cult_id = cult_id
         self.follower_id = follower_id
         self.id = id
+    
+    @classmethod
+    def create( cls, initiation_date, cult_id, follower_id ):
+        blood_oath = cls( initiation_date, cult_id, follower_id )
+        blood_oath.save
+        return blood_oath
+    
+    @property
+    def save( self ):
+        sql = '''
+            INSERT INTO blood_oaths ( 
+                initiation_date, cult_id, follower_id ) VALUES ( ?, ?, ? )
+        '''
+        params = ( self.initiation_date, self.cult_id, self.follower_id )
+        cursor.execute( sql, params )
+        connection.commit()
+        id_sql = 'SELECT last_insert_rowid() FROM blood_oaths'
+        self.id = cursor.execute( id_sql ).fetchone()[0]
+
+    @classmethod
+    def all( cls ):
+        sql = 'SELECT * FROM blood_oaths'
+        rows_from_db = cursor.execute( sql ).fetchall()
+        return [ cls.new_from_db( row ) for row in rows_from_db ]
+    
+    @classmethod
+    def new_from_db( cls, row ):
+        oath = cls( row[1], row[2], row[3] )
+        oath.id = row[0]
+        return oath
 
     @classmethod
     def create_table( cls ):
@@ -28,36 +58,6 @@ class BloodOath:
         cursor.execute( 'DELETE FROM blood_oaths' )
         connection.commit()
 
-    @classmethod
-    def all( cls ):
-        sql = 'SELECT * FROM blood_oaths'
-        rows_from_db = cursor.execute( sql ).fetchall()
-        return [ cls.new_from_db( row ) for row in rows_from_db ]
-
-    @property
-    def save( self ):
-        sql = '''
-            INSERT INTO blood_oaths ( 
-                initiation_date, cult_id, follower_id ) VALUES ( ?, ?, ? )
-        '''
-        params = ( self.initiation_date, self.cult_id, self.follower_id )
-        cursor.execute( sql, params )
-        connection.commit()
-        id_sql = 'SELECT last_insert_rowid() FROM blood_oaths'
-        self.id = cursor.execute( id_sql ).fetchone()[0]
-
-    @classmethod
-    def create( cls, initiation_date, cult_id, follower_id ):
-        blood_oath = cls( initiation_date, cult_id, follower_id )
-        blood_oath.save
-        return blood_oath
-    
-    @classmethod
-    def new_from_db( cls, row ):
-        oath = cls( row[1], row[2], row[3] )
-        oath.id = row[0]
-        return oath
-
 
     @property
     def follower( self ):
@@ -72,7 +72,6 @@ class BloodOath:
         sql = 'SELECT * FROM cults WHERE id = ? LIMIT 1'
         row = cursor.execute( sql, ( self.cult_id, ) ).fetchone()
         return Cult.new_from_db( row )
-
 
     @classmethod
     def first_oath( cls ):

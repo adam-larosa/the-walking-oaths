@@ -28,7 +28,11 @@ class Cult:
         else:
             return 'Argument not Follower object.'
 
-
+    @classmethod
+    def create( cls, name, location, founding_year, slogan, minimum_age ):
+        cult = cls( name, location, founding_year, slogan, minimum_age )
+        cult.save
+        return cult
 
     @classmethod
     def create_table( cls ):
@@ -75,11 +79,7 @@ class Cult:
         id_sql = 'SELECT last_insert_rowid() FROM cults'
         self.id = cursor.execute( id_sql ).fetchone()[0]
 
-    @classmethod
-    def create( cls, name, location, founding_year, slogan, minimum_age ):
-        cult = cls( name, location, founding_year, slogan, minimum_age )
-        cult.save
-        return cult
+
 
     @classmethod
     def new_from_db( cls, row ):
