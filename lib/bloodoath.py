@@ -28,6 +28,12 @@ class BloodOath:
         cursor.execute( 'DELETE FROM blood_oaths' )
         connection.commit()
 
+    @classmethod
+    def all( cls ):
+        sql = 'SELECT * FROM blood_oaths'
+        rows_from_db = cursor.execute( sql ).fetchall()
+        return [ cls.new_from_db( row ) for row in rows_from_db ]
+
     @property
     def save( self ):
         sql = '''

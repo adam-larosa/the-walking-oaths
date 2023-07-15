@@ -36,6 +36,12 @@ class Cult:
         cursor.execute( 'DELETE FROM cults' )
         connection.commit()
 
+    @classmethod
+    def all( cls ):
+        sql = 'SELECT * FROM cults'
+        rows_from_db = cursor.execute( sql ).fetchall()
+        return [ cls.new_from_db( row ) for row in rows_from_db ]
+
     @property
     def save( self ):
         sql = '''
@@ -64,21 +70,30 @@ class Cult:
         cult.id = row[0]
         return cult
 
-# ---------------------bookmark, below is unported -------------------------
 
     @property
     def oaths( self ):
-        return [ bo for bo in BloodOath.all if bo.cult == self ]
-
+        sql = '''
+            SELECT * FROM blood_oaths WHERE blood_oaths.cult_id = ?
+        '''
+        rows_from_db = cursor.execute( sql, ( self.id, ) ).fetchall()
+        return [ BloodOath.new_from_db( row ) for row in rows_from_db ]
+        
     @property
     def followers( self ):
-        return list( { bo.follower for bo in self.oaths } )
+        sql = '''
+            SELECT DISTINCT followers.* FROM followers
+            JOIN blood_oaths ON blood_oaths.follower_id = followers.id
+            WHERE blood_oaths.cult_id = ?
+        '''
+        rows_from_db = cursor.execute( sql, ( self.id, ) ).fetchall()
+        return [ Follower.new_from_db( row ) for row in rows_from_db ]
 
 
     def recruit_follower( self, follower, time = 'right now' ):
         if isinstance( follower, Follower ):
             if follower.age >= self.minimum_age:
-                BloodOath( time, self, follower )
+                BloodOath.create( time, self.id, follower.id )
             else:
                 print( 'Not yet young one, but now is not your time.' )
         else:
@@ -86,54 +101,83 @@ class Cult:
 
     @property
     def cult_population( self ):
-        return len( self.followers )
-
+        sql = '''
+            SELECT COUNT( DISTINCT followers.id ) FROM followers 
+            JOIN blood_oaths ON blood_oaths.follower_id = followers.id 
+            JOIN cults ON blood_oaths.cult_id = ?
+        '''
+        query_tuple = cursor.execute( sql, ( self.id, ) ).fetchone()
+        return query_tuple[0]
+        
     @classmethod
     def find_by_name( cls, query ):
-        for cult in cls.all:
-            if query.lower() in cult.name.lower():
-                return cult
+        sql = "SELECT * FROM cults WHERE name LIKE '%' || ? || '%' LIMIT 1"
+        row = cursor.execute( sql, ( query, ) ).fetchone()
+        if row:
+            return cls.new_from_db( row )
         return 'Cult not found'
 
     @classmethod
     def find_all_by_name( cls, query ):
-        return [ c for c in cls.all if query.lower() in c.name.lower() ]    
+        sql = "SELECT * FROM cults WHERE name LIKE '%' || ? || '%'"
+        rows_from_db = cursor.execute( sql, ( query, ) ).fetchall()
+        return [ cls.new_from_db( row ) for row in rows_from_db ]
 
     @classmethod
     def find_by_location( cls, query ):
-        return [ c for c in cls.all if query.lower() in c.location.lower() ]
+        sql = "SELECT * FROM cults WHERE location LIKE '%' || ? || '%'"
+        rows_from_db = cursor.execute( sql, ( query, ) ).fetchall()
+        return [ cls.new_from_db( row ) for row in rows_from_db ] 
 
     @classmethod
     def find_by_founding_year( cls, query ):
-        return [ c for c in cls.all if query == c.founding_year ]
+        sql = "SELECT * FROM cults WHERE founding_year = ?"
+        rows_from_db = cursor.execute( sql, ( query, ) ).fetchall()
+        return [ cls.new_from_db( row ) for row in rows_from_db ]
 
     @property
     def average_age( self ):
-        ages = sum( [ f.age for f in self.followers ] )
-        followers = len( self.followers )
-        return ages / followers
+        sql = '''
+            SELECT AVG( followers.age ) FROM followers
+            JOIN blood_oaths ON followers.id = blood_oaths.follower_id
+            WHERE blood_oaths.cult_id = ?
+        '''
+        query_tuple = cursor.execute( sql, ( self.id, ) ).fetchone()
+        return query_tuple[0]
 
     @property
     def my_followers_mottos( self ):
-        for f in self.followers:
-            print( f.life_motto )
+        sql = '''
+            SELECT followers.life_motto FROM followers 
+            JOIN blood_oaths ON blood_oaths.follower_id = followers.id 
+            WHERE blood_oaths.cult_id = ?
+        '''
+        query_tuple = cursor.execute( sql, ( self.id, ) ).fetchall()
+        for query in query_tuple:
+            print( query[0] )
 
     @classmethod
     def least_popular( cls ):
-        by_population = lambda c : c.cult_population
-        return sorted( cls.all, key = by_population )[0]
+        sql = '''
+            SELECT cults.*, COUNT(followers.id) AS follower_count
+            FROM cults
+            JOIN blood_oaths ON cults.id = blood_oaths.cult_id
+            JOIN followers ON blood_oaths.follower_id = followers.id
+            GROUP BY cults.id, cults.name
+            ORDER BY follower_count ASC
+            LIMIT 1;
+        '''
+        row = cursor.execute( sql ).fetchone()
+        return cls.new_from_db( row )
 
     @classmethod
-    def most_common_location( self ):
-        count = {}
-        for cult in Cult.all:
-            if count.get( cult.location ):
-                count[ cult.location ] += 1
-            else:
-                count[ cult.location ] = 1
-        return max( count, key = count.get )
-
-
-
-
-              
+    def most_common_location( cls ):
+        sql = '''
+            SELECT location, COUNT(*) AS cult_amount
+            FROM cults
+            GROUP BY location
+            ORDER BY cult_amount DESC
+            LIMIT 1;
+        '''
+        query_tuple = cursor.execute( sql ).fetchone()
+        return query_tuple[0]

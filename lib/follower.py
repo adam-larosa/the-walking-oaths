@@ -58,6 +58,7 @@ class Follower:
         follower.id = row[0]
         return follower
 
+
     @property
     def oaths( self ):
         sql = '''
@@ -72,8 +73,7 @@ class Follower:
         sql = '''
             SELECT DISTINCT cults.* FROM cults
             JOIN blood_oaths ON blood_oaths.cult_id = cults.id
-            JOIN followers on blood_oaths.follower_id = followers.id
-            WHERE followers.id = ?;
+            WHERE blood_oaths.follower_id = ?
         '''
         rows_from_db = cursor.execute( sql, ( self.id, ) ).fetchall()
         return [ Cult.new_from_db( row ) for row in rows_from_db ]
@@ -99,8 +99,7 @@ class Follower:
         sql = '''
             SELECT DISTINCT cults.slogan FROM cults
             JOIN blood_oaths ON blood_oaths.cult_id = cults.id
-            JOIN followers ON blood_oaths.follower_id = followers.id
-            WHERE followers.id = ?;
+            WHERE blood_oaths.follower_id = ?;
         '''
         rows_from_db = cursor.execute( sql, ( self.id, ) ).fetchall()
         for row_tuple in rows_from_db:
@@ -137,16 +136,12 @@ class Follower:
     @property
     def fellow_cult_members( self ):
         sql = '''
-            SELECT DISTINCT followers.*
-            FROM followers
-            JOIN blood_oaths
-            ON followers.id = blood_oaths.follower_id
+            SELECT DISTINCT followers.* FROM followers
+            JOIN blood_oaths ON followers.id = blood_oaths.follower_id
             WHERE blood_oaths.cult_id IN (
-                SELECT cult_id
-                FROM blood_oaths
-                WHERE follower_id = ?
+                SELECT cult_id FROM blood_oaths WHERE follower_id = ?
             )
-            AND followers.id <> ?;
+            AND followers.id <> ?
         '''
         rows_from_db = cursor.execute( sql, ( self.id, self.id ) ).fetchall()
         return [ Follower.new_from_db( row ) for row in rows_from_db ]
