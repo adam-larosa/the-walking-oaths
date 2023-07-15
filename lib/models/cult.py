@@ -18,10 +18,11 @@ class Cult:
         self.minimum_age = minimum_age
         Cult.all.append( self )
 
-
     @property
     def oaths( self ):
         return [ bo for bo in BloodOath.all if bo.cult == self ]
+
+
 
     @property
     def followers( self ):
