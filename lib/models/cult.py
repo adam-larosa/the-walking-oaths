@@ -18,6 +18,18 @@ class Cult:
         self.minimum_age = minimum_age
         self.id = id
 
+
+    def recruit_follower( self, follower, time = 'right now' ):
+        if isinstance( follower, Follower ):
+            if follower.age >= self.minimum_age:
+                return BloodOath.create( time, self.id, follower.id )
+            else:
+                print( 'Not yet young one, but now is not your time.' )
+        else:
+            return 'Argument not Follower object.'
+
+
+
     @classmethod
     def create_table( cls ):
         sql = '''
@@ -94,15 +106,6 @@ class Cult:
         rows_from_db = cursor.execute( sql, ( self.id, ) ).fetchall()
         return [ Follower.new_from_db( row ) for row in rows_from_db ]
 
-
-    def recruit_follower( self, follower, time = 'right now' ):
-        if isinstance( follower, Follower ):
-            if follower.age >= self.minimum_age:
-                BloodOath.create( time, self.id, follower.id )
-            else:
-                print( 'Not yet young one, but now is not your time.' )
-        else:
-            return 'Argument not Follower object.'
 
     @property
     def cult_population( self ):
