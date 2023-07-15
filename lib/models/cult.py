@@ -34,6 +34,23 @@ class Cult:
         cult.save
         return cult
 
+    @property
+    def save( self ):
+        sql = '''
+            INSERT INTO cults ( 
+                name, location, founding_year, slogan, minimum_age 
+            ) VALUES ( ?, ?, ?, ?, ? )
+        '''
+        params_tuple = ( 
+            self.name, self.location, self.founding_year, self.slogan, 
+            self.minimum_age 
+        )
+        cursor.execute( sql, params_tuple )
+        connection.commit()
+        id_sql = 'SELECT last_insert_rowid() FROM cults'
+        self.id = cursor.execute( id_sql ).fetchone()[0]
+
+
     @classmethod
     def create_table( cls ):
         sql = '''
@@ -63,21 +80,6 @@ class Cult:
         rows_from_db = cursor.execute( sql ).fetchall()
         return [ cls.new_from_db( row ) for row in rows_from_db ]
 
-    @property
-    def save( self ):
-        sql = '''
-            INSERT INTO cults ( 
-                name, location, founding_year, slogan, minimum_age 
-            ) VALUES ( ?, ?, ?, ?, ? )
-        '''
-        params_tuple = ( 
-            self.name, self.location, self.founding_year, self.slogan, 
-            self.minimum_age 
-        )
-        cursor.execute( sql, params_tuple )
-        connection.commit()
-        id_sql = 'SELECT last_insert_rowid() FROM cults'
-        self.id = cursor.execute( id_sql ).fetchone()[0]
 
 
 
