@@ -2,6 +2,12 @@ from lib.walkingdev import cursor, connection
 from .bloodoath import BloodOath
 from .follower import Follower
 
+
+
+
+
+
+
 class Cult:
 
     def __init__( self, name, location, founding_year, slogan, minimum_age, 
