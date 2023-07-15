@@ -15,6 +15,7 @@ class Follower:
 
 
 
+    
     @property
     def oaths( self ):
         sql = '''
@@ -22,6 +23,7 @@ class Follower:
         '''
         rows_from_db = cursor.execute( sql, ( self.id, ) ).fetchall()
         return [ BloodOath.new_from_db( row ) for row in rows_from_db ]
+
 
     @property
     def cults( self ):
