@@ -16,7 +16,7 @@ class Cult( Base ):
     location = Column( String() )
     founding_year = Column( Integer() )
     slogan = Column( String() )
-    meow = Column( String() )
+
 
 
     def recruit_follower( self, follower, date = 'right now' ):
