@@ -18,12 +18,7 @@ class Cult( Base ):
     slogan = Column( String() )
     meow = Column( String() )
 
-    @classmethod
-    def all( cls ):
-        return session.query( cls ).all()
 
-    # Takes in an argument of a Follower instance and adds them to this cult's 
-    # list of followers.
     def recruit_follower( self, follower, date = 'right now' ):
         from .follower import Follower
         if isinstance( follower, Follower ):
@@ -37,3 +32,7 @@ class Cult( Base ):
             return oath
         else:
             return 'Argument not valid Follower instance.'
+
+    @classmethod
+    def all( cls ):
+        return session.query( cls ).all()
