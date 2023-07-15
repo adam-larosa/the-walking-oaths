@@ -18,6 +18,17 @@ class Cult:
         self.minimum_age = minimum_age
         Cult.all.append( self )
 
+
+    @property
+    def oaths( self ):
+        return [ bo for bo in BloodOath.all if bo.cult == self ]
+
+    @property
+    def followers( self ):
+        return list( { bo.follower for bo in self.oaths } )
+
+
+    
     
     def recruit_follower( self, follower, time = 'right now' ):
         if isinstance( follower, Follower ):
@@ -28,13 +39,7 @@ class Cult:
         else:
             return 'Argument not Follower object.'
     
-    @property
-    def oaths( self ):
-        return [ bo for bo in BloodOath.all if bo.cult == self ]
 
-    @property
-    def followers( self ):
-        return list( { bo.follower for bo in self.oaths } )
 
     @property
     def cult_population( self ):
