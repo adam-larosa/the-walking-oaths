@@ -12,6 +12,7 @@ class BloodOath:
         self.follower_id = follower_id
         self.id = id
 
+    
     @classmethod
     def all( cls ):
         sql = 'SELECT * FROM blood_oaths'
