@@ -1,6 +1,13 @@
 from .bloodoath import BloodOath
 from .follower import Follower
 
+
+
+
+
+
+
+
 class Cult:
     all = []
     def __init__( self, name, location, founding_year, slogan, minimum_age ):
