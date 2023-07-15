@@ -6,6 +6,7 @@ from .bloodoath import BloodOath
 
 
 class Follower:
+    
     def __init__( self, name, age, life_motto, id = None ):
         self.name = name
         self.age = age
