@@ -1,9 +1,9 @@
 from sqlalchemy import Column, Integer, String
-if 'lib' in __name__ :
-    from lib.walkingdev import Base, session
-else:
-    from walkingdev import Base, session
-
+if 'lib' in __name__ :                          # This if / else allows 
+    from lib.walkingdev import Base, session    # the files to be used when
+else:                                           # scripts use these same
+    from walkingdev import Base, session        # files from different places
+                                                
 
 class Follower( Base ):
     __tablename__ = 'followers'
