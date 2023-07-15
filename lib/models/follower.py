@@ -20,9 +20,18 @@ class Follower:
     def oaths( self ):
         return [ o for o in BloodOath.all if o.follower == self ]
 
+    
+    
+    
+    
+    
     @property
     def cults( self ):
         return list( { o.cult for o in self.oaths } )
+
+
+
+
 
     def join_cult( self, cult, time = 'right now' ):
         from .cult import Cult
