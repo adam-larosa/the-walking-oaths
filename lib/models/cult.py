@@ -1,9 +1,9 @@
-
 from sqlalchemy import Column, Integer, String
-if 'lib' in __name__ :
-    from lib.walkingdev import Base, session
-else:
-    from walkingdev import Base, session
+# Hoping to start our BloodOath program the same way for each branch, things
+if 'lib' in __name__ : # got fun when files were being loaded by alembic in
+    from lib.walkingdev import Base, session # the lib directory, while 
+else: # starting debug loaded the same files from a different location.  This
+    from walkingdev import Base, session # if / else was the quick fix lol! ;)
 
 from .bloodoath import BloodOath
 
