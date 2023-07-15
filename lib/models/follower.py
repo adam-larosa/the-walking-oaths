@@ -14,8 +14,6 @@ class Follower:
         self.id = id
 
 
-
-    
     @property
     def oaths( self ):
         sql = '''
