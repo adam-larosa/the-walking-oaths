@@ -1,6 +1,6 @@
 
 from sqlalchemy import Column, Integer, String
-from lib.walkingdev import Base
+from lib.walkingdev import Base, session
 
 class BloodOath( Base ):
     __tablename__ = 'blood_oaths'
