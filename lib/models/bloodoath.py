@@ -39,7 +39,18 @@ class BloodOath:
         return [ cls.new_from_db( row ) for row in rows_from_db ]
 
 
+    @classmethod
+    def first_oath( cls ):
+        from .follower import Follower
+        sql = '''
+            SELECT followers.* FROM followers
+            JOIN blood_oaths ON blood_oaths.follower_id = followers.id 
+            LIMIT 1
+        '''
+        row = cursor.execute( sql ).fetchone()
+        return Follower.new_from_db( row )
 
+        
 
     @classmethod
     def create( cls, initiation_date, cult_id, follower_id ):
@@ -90,14 +101,5 @@ class BloodOath:
 
 
 
-    @classmethod
-    def first_oath( cls ):
-        from .follower import Follower
-        sql = '''
-            SELECT followers.* FROM followers
-            JOIN blood_oaths ON blood_oaths.follower_id = followers.id 
-            LIMIT 1
-        '''
-        row = cursor.execute( sql ).fetchone()
-        return Follower.new_from_db( row )
+
         
