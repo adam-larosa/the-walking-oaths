@@ -16,7 +16,7 @@ class BloodOath( Base ):
 
     
     follower = relationship('Follower', back_populates = 'oaths' )
-    
+    cult = relationship('Cult', back_populates = 'oaths' )
     
     
 
