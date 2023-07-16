@@ -14,8 +14,8 @@ class BloodOath( Base ):
     follower_id = Column( Integer(), ForeignKey('followers.id') )
 
 
-    cult = relationship('Cult', back_populates='oaths')
-    follower = relationship('Follower', back_populates='oaths')
+    cult = relationship( 'Cult', back_populates = 'oaths' )
+    follower = relationship('Follower', back_populates = 'oaths' )
     
     @classmethod
     def all( cls ):
