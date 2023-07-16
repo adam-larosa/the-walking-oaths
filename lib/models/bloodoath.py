@@ -37,6 +37,8 @@ class BloodOath:
 
 
 
+    
+    
     @classmethod
     def first_oath( cls ):
         return cls.all[0].follower
