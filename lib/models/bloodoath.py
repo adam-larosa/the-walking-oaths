@@ -35,3 +35,11 @@ class BloodOath( Base ):
     @classmethod
     def all( cls ):
         return session.query( cls ).all()
+
+
+
+
+    @classmethod
+    def first_oath( cls ):
+        pass
+
