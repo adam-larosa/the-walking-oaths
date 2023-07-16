@@ -21,8 +21,19 @@ class Follower( Base ):
     oaths = relationship( 'BloodOath', cascade = 'all, delete-orphan' )
 
 
+    
+    
+    
+    
+    
+    
     cults = association_proxy( 'oaths', 'cult', 
         creator = lambda c: BloodOath( cult = c, initiation_date = 'now!' ) )
+
+
+
+
+
 
 
 
