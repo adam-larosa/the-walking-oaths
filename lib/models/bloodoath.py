@@ -6,7 +6,7 @@
 
 
 class BloodOath:
-    
+    all = []
     def __init__( self, initiation_date, cult, follower ):
         self.initiation_date = initiation_date
         self.cult = cult
@@ -14,7 +14,7 @@ class BloodOath:
         BloodOath.all.append( self )
 
 
-    all = []
+    
 
 
 
