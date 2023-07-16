@@ -18,6 +18,10 @@ class Follower( Base ):
     oaths = relationship( 'BloodOath', cascade = 'all, delete-orphan' )
 
 
+
+
+
+
     @classmethod
     def all( cls ):
         return session.query( cls ).all()
