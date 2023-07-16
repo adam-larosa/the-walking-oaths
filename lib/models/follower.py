@@ -15,7 +15,7 @@ class Follower( Base ):
 
     
     
-    oaths = relationship( 'BloodOath', cascade='all, delete-orphan' )
+    oaths = relationship( 'BloodOath', cascade = 'all, delete-orphan' )
 
 
     @classmethod
