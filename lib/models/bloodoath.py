@@ -24,10 +24,10 @@ class BloodOath:
 
 
 
-
-
-
-
+    # @property
+    # def cult( self )
+    #   This would be needed if we wanted a getter and setter for the cult
+    #   attribute.
 
 
     
