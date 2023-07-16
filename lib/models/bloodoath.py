@@ -14,9 +14,9 @@ class BloodOath:
         BloodOath.all.append( self )
 
 
-    
-
-
+    # @property
+    # def follower( self )
+    #     print( 'meow' )
 
 
 
