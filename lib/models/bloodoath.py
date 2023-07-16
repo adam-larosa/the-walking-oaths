@@ -21,6 +21,9 @@ class BloodOath:
         row = cursor.execute( sql, ( self.follower_id, ) ).fetchone()
         return Follower.new_from_db( row )
 
+
+
+
     @property
     def cult( self ):
         from .cult import Cult
