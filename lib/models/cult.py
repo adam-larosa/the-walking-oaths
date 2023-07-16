@@ -5,8 +5,8 @@ if 'lib' in __name__ : # got fun when files were being loaded by alembic in
 else: # starting debug loaded the same files from a different location.  This
     from walkingdev import Base, session # if / else was the quick fix lol! ;)
 from sqlalchemy.orm import relationship
+from sqlalchemy.ext.associationproxy import association_proxy
 from .bloodoath import BloodOath
-
 
 class Cult( Base ):
     __tablename__ = 'cults'
