@@ -20,9 +20,22 @@ class Cult( Base ):
     oaths = relationship( 'BloodOath', cascade = 'all, delete-orphan' )
 
 
+    
+    
+    
+    
+    
+    
+    
     followers = association_proxy( 'oaths', 'cult', 
         creator = lambda f : BloodOath( follower = f, initiation_date = 'now!' ) )
 
+    
+    
+    
+    
+    
+    
     def recruit_follower( self, follower, date = 'right now' ):
         from .follower import Follower
         if isinstance( follower, Follower ):
