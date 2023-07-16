@@ -14,6 +14,9 @@ class Follower:
         Follower.all.append( self )
 
 
+    
+    
+    
     @property
     def oaths( self ):
         return [ o for o in BloodOath.all if o.follower == self ]
