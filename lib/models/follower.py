@@ -13,6 +13,8 @@ class Follower( Base ):
     age = Column( Integer() )
     life_motto = Column( String() )
 
+    
+    
     oaths = relationship('BloodOath', cascade='all, delete-orphan')
 
 
