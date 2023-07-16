@@ -16,7 +16,8 @@ class BloodOath:
 
     # @property
     # def follower( self )
-    #     print( 'meow' )
+    #     This would be needed if we wanted a getter and setter for the 
+    #     follower attribute.
 
 
 
@@ -26,8 +27,8 @@ class BloodOath:
 
     # @property
     # def cult( self )
-    #   This would be needed if we wanted a getter and setter for the cult
-    #   attribute.
+    #     This would be needed if we wanted a getter and setter for the cult
+    #     attribute.
 
 
     
