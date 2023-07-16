@@ -41,5 +41,5 @@ class BloodOath( Base ):
 
     @classmethod
     def first_oath( cls ):
-        pass
+        return session.query( BloodOath ).first().follower
 
