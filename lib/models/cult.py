@@ -39,14 +39,8 @@ class Cult( Base ):
     def recruit_follower( self, follower, date = 'right now' ):
         from .follower import Follower
         if isinstance( follower, Follower ):
-            oath = BloodOath( 
-                initiation_date = date, 
-                follower_id = follower.id, 
-                cult_id = self.id  
-            )
-            session.add( oath )
+            self.followers.append( follower )
             session.commit()
-            return oath
         else:
             return 'Argument not valid Follower instance.'
 
