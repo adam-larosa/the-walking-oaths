@@ -4,7 +4,7 @@ if 'lib' in __name__ : # got fun when files were being loaded by alembic in
     from lib.walkingdev import Base, session # the lib directory, while 
 else: # starting debug loaded the same files from a different location.  This
     from walkingdev import Base, session # if / else was the quick fix lol! ;)
-
+from sqlalchemy.orm import relationship
 from .bloodoath import BloodOath
 
 
@@ -17,7 +17,11 @@ class Cult( Base ):
     founding_year = Column( Integer() )
     slogan = Column( String() )
 
+    oaths = relationship( 'BloodOath', cascade = 'all, delete-orphan' )
 
+
+    followers = association_proxy( 'oaths', 'cult', 
+        creator = lambda f : BloodOath( follower = f, initiation_date = 'now!' ) )
 
     def recruit_follower( self, follower, date = 'right now' ):
         from .follower import Follower

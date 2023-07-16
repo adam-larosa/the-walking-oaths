@@ -4,7 +4,8 @@ if 'lib' in __name__ :                          # This if / else allows
 else:                                           # scripts use these same
     from walkingdev import Base, session        # files from different places
 from sqlalchemy.orm import relationship#, backref                                                
-
+from sqlalchemy.ext.associationproxy import association_proxy
+from .bloodoath import BloodOath
 class Follower( Base ):
     __tablename__ = 'followers'
 
@@ -18,8 +19,8 @@ class Follower( Base ):
     oaths = relationship( 'BloodOath', cascade = 'all, delete-orphan' )
 
 
-    cults = association_proxy( 'blood_oaths', 'cult', 
-        creator = lambda c: BloodOath( cult = c ) )
+    cults = association_proxy( 'oaths', 'cult', 
+        creator = lambda c: BloodOath( cult = c, initiation_date = 'now!' ) )
 
 
 
