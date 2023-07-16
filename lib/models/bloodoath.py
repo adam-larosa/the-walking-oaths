@@ -1,4 +1,4 @@
-from sqlalchemy import Column, Integer, String
+from sqlalchemy import ForeignKey, Column, Integer, String
 if 'lib' in __name__ :
     from lib.walkingdev import Base, session
 else:
@@ -10,8 +10,8 @@ class BloodOath( Base ):
 
     id = Column( Integer(), primary_key = True )
     initiation_date = Column( String() )
-    cult_id = Column( Integer() )
-    follower_id = Column( Integer() )
+    cult_id = Column( Integer(), ForeignKey('cults.id') )
+    follower_id = Column( Integer(), ForeignKey('followers.id') )
 
     @classmethod
     def all( cls ):

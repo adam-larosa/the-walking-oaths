@@ -1,8 +1,8 @@
-"""bloodoath model
+"""BloodOath model
 
-Revision ID: 6700b8b1346f
+Revision ID: e9884056b907
 Revises: 95df60fee3d1
-Create Date: 2023-07-14 19:20:12.405274
+Create Date: 2023-07-16 12:45:31.193751
 
 """
 from alembic import op
@@ -10,7 +10,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision = '6700b8b1346f'
+revision = 'e9884056b907'
 down_revision = '95df60fee3d1'
 branch_labels = None
 depends_on = None
@@ -23,6 +23,8 @@ def upgrade() -> None:
     sa.Column('initiation_date', sa.String(), nullable=True),
     sa.Column('cult_id', sa.Integer(), nullable=True),
     sa.Column('follower_id', sa.Integer(), nullable=True),
+    sa.ForeignKeyConstraint(['cult_id'], ['cults.id'], ),
+    sa.ForeignKeyConstraint(['follower_id'], ['followers.id'], ),
     sa.PrimaryKeyConstraint('id')
     )
     # ### end Alembic commands ###
