@@ -13,6 +13,22 @@ class BloodOath:
         self.follower_id = follower_id
         self.id = id
 
+
+    @property
+    def follower( self ):
+        from .follower import Follower
+        sql = 'SELECT * FROM followers WHERE id = ? LIMIT 1'
+        row = cursor.execute( sql, ( self.follower_id, ) ).fetchone()
+        return Follower.new_from_db( row )
+
+    @property
+    def cult( self ):
+        from .cult import Cult
+        sql = 'SELECT * FROM cults WHERE id = ? LIMIT 1'
+        row = cursor.execute( sql, ( self.cult_id, ) ).fetchone()
+        return Cult.new_from_db( row )
+
+
     @classmethod
     def all( cls ):
         sql = 'SELECT * FROM blood_oaths'
@@ -69,19 +85,7 @@ class BloodOath:
         connection.commit()
 
 
-    @property
-    def follower( self ):
-        from .follower import Follower
-        sql = 'SELECT * FROM followers WHERE id = ? LIMIT 1'
-        row = cursor.execute( sql, ( self.follower_id, ) ).fetchone()
-        return Follower.new_from_db( row )
 
-    @property
-    def cult( self ):
-        from .cult import Cult
-        sql = 'SELECT * FROM cults WHERE id = ? LIMIT 1'
-        row = cursor.execute( sql, ( self.cult_id, ) ).fetchone()
-        return Cult.new_from_db( row )
 
     @classmethod
     def first_oath( cls ):
