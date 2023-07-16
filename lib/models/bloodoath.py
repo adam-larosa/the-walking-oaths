@@ -32,7 +32,6 @@ class BloodOath:
 
 
 
-
     @classmethod
     def all( cls ):
         return cls.all
