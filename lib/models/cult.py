@@ -19,6 +19,7 @@ class Cult:
         self.id = id
 
 
+
     @property
     def oaths( self ):
         sql = '''
