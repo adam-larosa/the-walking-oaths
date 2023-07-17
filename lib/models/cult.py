@@ -1,4 +1,4 @@
-from sqlalchemy import Column, Integer, String
+from sqlalchemy import func, distinct, Column, Integer, String
 # Hoping to start our BloodOath program the same way for each branch, things
 if 'lib' in __name__ : # got fun when files were being loaded by alembic in
     from lib.walkingdev import Base, session # the lib directory, when in root  
@@ -29,7 +29,7 @@ class Cult( Base ):
     
     
     
-    followers = association_proxy( 'oaths', 'cult', 
+    followers = association_proxy( 'oaths', 'follower', 
         creator = lambda f : BloodOath( follower = f, initiation_date = 'now!' ) )
 
     
@@ -51,7 +51,19 @@ class Cult( Base ):
         else:
             return 'Argument not valid Follower instance.'
 
-            
+
+
+
+    @property
+    def cult_population(self):
+        query = session.query( func.count( distinct( BloodOath.follower_id ) ) )
+        by_cult = query.filter( BloodOath.cult_id == self.id )
+        return by_cult.scalar()  # scalar is what actually executes the SQL 
+                                 # query & returns the first result, or None 
+
+
+
+
 
     @classmethod
     def all( cls ):
