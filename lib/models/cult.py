@@ -1,4 +1,4 @@
-from sqlalchemy import asc, func, distinct, Column, Integer, String
+from sqlalchemy import asc, desc, func, distinct, Column, Integer, String
 # Hoping to start our BloodOath program the same way for each branch, things
 if 'lib' in __name__ : # got fun when files were being loaded by alembic in
     from lib.walkingdev import Base, session # the lib directory, when in root  
