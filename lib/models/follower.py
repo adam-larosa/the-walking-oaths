@@ -103,6 +103,17 @@ class Follower:
         by_cults = lambda f : len(f.cults)
         return sorted( Follower.all, key = by_cults, reverse = True )[:10]
 
+
+
+
+
+
+
+
+
+
+
+
     @property
     def fellow_cult_members( self ):
         fellows = set()
