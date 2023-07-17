@@ -38,7 +38,6 @@ class Cult:
 
 
 
-
     
     
     def recruit_follower( self, follower, time = 'right now' ):
