@@ -85,4 +85,5 @@ class Cult( Base ):
 
     @classmethod
     def find_by_location( cls, query ):
-        pass
+        query = session.query( cls ).filter( cls.location.ilike( f'%{search}%' ) )
+        return query.all()
