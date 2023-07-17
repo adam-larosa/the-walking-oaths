@@ -64,4 +64,12 @@ class Follower( Base ):
     def of_a_certain_age( cls, age_query ):
         return session.query( cls ).filter( cls.age >= age_query ).all()
 
-        
+
+
+
+    @property
+    def my_cults_slogans( self ):
+        from .cult import Cult
+        query = session.query( Cult.slogan )
+        by_follower = query.filter( Cult.oaths.any( follower_id = self.id ) )
+        return [ result_tuple[0] for result_tuple in by_follower.all() ]
