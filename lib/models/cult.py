@@ -103,10 +103,16 @@ class Cult:
         followers = len( self.followers )
         return ages / followers
 
+
+
+
+
     @property
     def my_followers_mottos( self ):
         for f in self.followers:
             print( f.life_motto )
+
+
 
     @classmethod
     def least_popular( cls ):
