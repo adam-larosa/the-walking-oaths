@@ -107,6 +107,7 @@ class Cult:
 
 
 
+
     @property
     def my_followers_mottos( self ):
         for f in self.followers:
