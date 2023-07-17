@@ -125,6 +125,16 @@ class Cult:
         by_population = lambda c : c.cult_population
         return sorted( cls.all, key = by_population )[0]
 
+
+
+
+
+
+
+
+
+
+
     @classmethod
     def most_common_location( self ):
         count = {}
