@@ -119,6 +119,7 @@ class Cult:
         for query in query_tuple:
             print( query[0] )
 
+
     @classmethod
     def least_popular( cls ):
         sql = '''
