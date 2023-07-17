@@ -61,8 +61,6 @@ class Cult( Base ):
 
 
 
-
-
     @classmethod
     def all( cls ):
         return session.query( cls ).all()
