@@ -102,4 +102,19 @@ class Cult( Base ):
         from .follower import Follower
         query = session.query( func.avg( Follower.age ) )
         return query.filter( Follower.oaths.any( cult_id = self.id ) ).scalar()
-    
+
+
+
+
+
+
+    @property
+    def my_followers_mottos( self ):
+        sql = '''
+            SELECT followers.life_motto FROM followers 
+            JOIN blood_oaths ON blood_oaths.follower_id = followers.id 
+            WHERE blood_oaths.cult_id = ?
+        '''
+        query_tuple = cursor.execute( sql, ( self.id, ) ).fetchall()
+        for query in query_tuple:
+            print( query[0] )
