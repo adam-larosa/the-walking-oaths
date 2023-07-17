@@ -37,12 +37,9 @@ class Cult:
         '''
         rows_from_db = cursor.execute( sql, ( self.id, ) ).fetchall()
         return [ Follower.new_from_db( row ) for row in rows_from_db ]
- 
-    @classmethod
-    def new_from_db( cls, row ):
-        cult = cls( row[1], row[2], row[3], row[4], row[5] )
-        cult.id = row[0]
-        return cult
+
+
+
 
     def recruit_follower( self, follower, time = 'right now' ):
         if isinstance( follower, Follower ):
@@ -52,6 +49,15 @@ class Cult:
                 print( 'Not yet young one, but now is not your time.' )
         else:
             return 'Argument not Follower object.'
+
+
+    @classmethod
+    def new_from_db( cls, row ):
+        cult = cls( row[1], row[2], row[3], row[4], row[5] )
+        cult.id = row[0]
+        return cult
+
+
 
     @classmethod
     def create( cls, name, location, founding_year, slogan, minimum_age ):
