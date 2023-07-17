@@ -1,4 +1,4 @@
-from sqlalchemy import Column, Integer, String
+from sqlalchemy import func, Column, Integer, String
 if 'lib' in __name__ :                          # This if / else allows 
     from lib.walkingdev import Base, session    # the files to be used when
 else:                                           # other scripts use these same
@@ -81,14 +81,18 @@ class Follower( Base ):
 
     @classmethod
     def most_active( cls ):
-        sql = '''
-            SELECT followers.*, 
-            COUNT( DISTINCT blood_oaths.cult_id ) AS active_most
-            FROM followers 
-            JOIN blood_oaths ON followers.id = blood_oaths.follower_id
-            GROUP BY followers.id, followers.name
-            ORDER BY active_most DESC
-            LIMIT 1;
-        '''
-        row = cursor.execute( sql ).fetchone()
-        return cls.new_from_db( row )
+        subquery = session.query(
+            BloodOath.follower_id, 
+            func.count(BloodOath.cult_id
+        ). \
+            label('active_most')). \
+            group_by( BloodOath.follower_id ). \
+            subquery()
+        
+        query = session.query(cls). \
+            join(subquery, cls.id == subquery.c.follower_id). \
+            order_by(subquery.c.active_most.desc()). \
+            limit(1)
+        
+        result = query.first()
+        return result
