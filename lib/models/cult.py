@@ -84,12 +84,6 @@ class Cult:
 
 
     @classmethod
-    def find_all_by_name( cls, query ):
-        sql = "SELECT * FROM cults WHERE name LIKE '%' || ? || '%'"
-        rows_from_db = cursor.execute( sql, ( query, ) ).fetchall()
-        return [ cls.new_from_db( row ) for row in rows_from_db ]
-
-    @classmethod
     def find_by_location( cls, query ):
         sql = "SELECT * FROM cults WHERE location LIKE '%' || ? || '%'"
         rows_from_db = cursor.execute( sql, ( query, ) ).fetchall()
