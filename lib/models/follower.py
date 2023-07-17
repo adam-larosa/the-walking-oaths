@@ -52,10 +52,6 @@ class Follower:
 
 
 
-
-
-
-
     @classmethod
     def all( cls ):
         return cls.all
