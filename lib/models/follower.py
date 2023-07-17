@@ -78,6 +78,7 @@ class Follower:
         for query_tuple in query_list:
             print( query_tuple[0] )
 
+
     @classmethod
     def most_active( cls ):
         sql = '''
