@@ -30,7 +30,7 @@ class Follower( Base ):
     
     
     cults = association_proxy( 'oaths', 'cult', 
-        creator = lambda c: BloodOath( cult = c, initiation_date = 'now!' ) )
+        creator = lambda c : BloodOath( cult = c, initiation_date = 'now!' ) )
 
 
 
