@@ -77,3 +77,12 @@ class Cult( Base ):
     def find_by_name( cls, search ):
         query = session.query( cls ).filter( cls.name.ilike( f'%{search}%' ) )
         return query.first()
+
+
+
+    
+
+
+    @classmethod
+    def find_by_location( cls, query ):
+        pass
