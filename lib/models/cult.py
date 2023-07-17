@@ -51,6 +51,7 @@ class Cult:
             return 'Argument not Follower object.'
 
 
+
     @classmethod
     def new_from_db( cls, row ):
         cult = cls( row[1], row[2], row[3], row[4], row[5] )
