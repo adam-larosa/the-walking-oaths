@@ -56,6 +56,12 @@ class Cult:
     def cult_population( self ):
         return len( self.followers )
 
+
+
+
+
+
+
     @classmethod
     def find_by_name( cls, query ):
         for cult in cls.all:
