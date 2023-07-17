@@ -10,8 +10,8 @@ class BloodOath( Base ):
 
     id = Column( Integer(), primary_key = True )
     initiation_date = Column( String() )
-    cult_id = Column( Integer(), ForeignKey('cults.id') )
-    follower_id = Column( Integer(), ForeignKey('followers.id') )
+    cult_id = Column( Integer(), ForeignKey( 'cults.id' ) )
+    follower_id = Column( Integer(), ForeignKey( 'followers.id' ) )
 
 
     
