@@ -44,8 +44,12 @@ class Cult( Base ):
     def recruit_follower( self, follower, date = 'right now' ):
         from .follower import Follower
         if isinstance( follower, Follower ):
-            self.followers.append( follower )
-            session.commit()
+            if follower.age >= self.minimum_age:
+                self.followers.append( follower )
+                session.commit()
+            else:
+                print( 'Not yet young one, but now is not your time.' )
+
         else:
             return 'Argument not valid Follower instance.'
 
