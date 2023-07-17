@@ -48,7 +48,6 @@ class Cult( Base ):
                 session.commit()
             else:
                 print( 'Not yet young one, but now is not your time.' )
-
         else:
             return 'Argument not valid Follower instance.'
 
