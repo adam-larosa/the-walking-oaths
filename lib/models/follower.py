@@ -93,6 +93,21 @@ class Follower( Base ):
             join(subquery, cls.id == subquery.c.follower_id). \
             order_by(subquery.c.active_most.desc()). \
             limit(1)
-        
         result = query.first()
         return result
+
+
+
+    @classmethod
+    def top_ten( cls ):
+        sql = '''
+            SELECT followers.*, 
+            COUNT( DISTINCT blood_oaths.cult_id ) AS active_most
+            FROM followers 
+            JOIN blood_oaths ON followers.id = blood_oaths.follower_id
+            GROUP BY followers.id, followers.name
+            ORDER BY active_most DESC
+            LIMIT 10;
+        '''
+        rows_from_db = cursor.execute( sql ).fetchall()
+        return [ cls.new_from_db( row ) for row in rows_from_db ]
