@@ -46,3 +46,9 @@ class Follower( Base ):
     @classmethod
     def all( cls ):
         return session.query( cls ).all()
+
+
+
+
+    def join_cult( self, new_cult ):
+        pass
