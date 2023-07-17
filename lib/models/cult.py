@@ -18,6 +18,8 @@ class Cult:
         self.minimum_age = minimum_age
         self.id = id
 
+
+
     @property
     def oaths( self ):
         sql = '''
