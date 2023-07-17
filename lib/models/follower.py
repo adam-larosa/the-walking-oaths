@@ -41,55 +41,12 @@ class Follower:
 
 
 
-    @classmethod
-    def create_table( cls ):
-        sql = '''
-            CREATE TABLE IF NOT EXISTS followers ( 
-                id INTEGER PRIMARY KEY,
-                name TEXT,
-                age INTEGER,
-                life_motto TEXT
-            )
-        '''
-        cursor.execute( sql )
     
-    @classmethod
-    def drop_table( cls ):
-        cursor.execute( 'DROP TABLE followers' )
-    
-    @classmethod
-    def erase_table( cls ):
-        cursor.execute( 'DELETE FROM followers' )
-        connection.commit()
-
     @classmethod
     def all( cls ):
         sql = 'SELECT * FROM followers'
         rows_from_db = cursor.execute( sql ).fetchall()
         return [ cls.new_from_db( row ) for row in rows_from_db ]
-
-    @property
-    def save( self ):
-        sql = '''
-            INSERT INTO followers ( name, age, life_motto ) VALUES ( ?, ?, ? )
-        '''
-        cursor.execute( sql, ( self.name, self.age, self.life_motto ) )
-        connection.commit()
-        id_sql = 'SELECT last_insert_rowid() FROM followers'
-        self.id = cursor.execute( id_sql ).fetchone()[0]
-
-    @classmethod
-    def create( cls, name, age, life_motto ):
-        follower = cls( name, age, life_motto )
-        follower.save
-        return follower
-
-    @classmethod
-    def new_from_db( cls, row ):
-        follower = cls( row[1], row[2], row[3] )
-        follower.id = row[0]
-        return follower
-
 
 
     def join_cult( self, cult, time = 'right now' ):
@@ -159,3 +116,50 @@ class Follower:
         '''
         rows_from_db = cursor.execute( sql, ( self.id, self.id ) ).fetchall()
         return [ Follower.new_from_db( row ) for row in rows_from_db ]
+
+
+    @property
+    def save( self ):
+        sql = '''
+            INSERT INTO followers ( name, age, life_motto ) VALUES ( ?, ?, ? )
+        '''
+        cursor.execute( sql, ( self.name, self.age, self.life_motto ) )
+        connection.commit()
+        id_sql = 'SELECT last_insert_rowid() FROM followers'
+        self.id = cursor.execute( id_sql ).fetchone()[0]
+
+    @classmethod
+    def create( cls, name, age, life_motto ):
+        follower = cls( name, age, life_motto )
+        follower.save
+        return follower
+
+    @classmethod
+    def new_from_db( cls, row ):
+        follower = cls( row[1], row[2], row[3] )
+        follower.id = row[0]
+        return follower
+
+
+
+
+    @classmethod
+    def create_table( cls ):
+        sql = '''
+            CREATE TABLE IF NOT EXISTS followers ( 
+                id INTEGER PRIMARY KEY,
+                name TEXT,
+                age INTEGER,
+                life_motto TEXT
+            )
+        '''
+        cursor.execute( sql )
+    
+    @classmethod
+    def drop_table( cls ):
+        cursor.execute( 'DROP TABLE followers' )
+    
+    @classmethod
+    def erase_table( cls ):
+        cursor.execute( 'DELETE FROM followers' )
+        connection.commit()
