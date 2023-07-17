@@ -1,4 +1,4 @@
-from sqlalchemy import func, Column, Integer, String
+from sqlalchemy import select, func, Column, Integer, String
 if 'lib' in __name__ :                          # This if / else allows 
     from lib.walkingdev import Base, session    # the files to be used when
 else:                                           # other scripts use these same
@@ -114,14 +114,18 @@ class Follower( Base ):
             limit( 10 )
         return query.all()
 
+
     @property
     def fellow_cult_members(self):
-        subquery = select(BloodOath.cult_id).where(BloodOath.follower_id == self.id).subquery()
+        subquery = select( BloodOath.cult_id ).where( 
+            BloodOath.follower_id == self.id
+        ).as_scalar()
 
-        query = select(Follower).distinct().\
-            join(BloodOath, Follower.id == BloodOath.follower_id).\
-            where(BloodOath.cult_id.in_(subquery)).\
-            where(Follower.id != self.id)
-        
-        return session.execute(query).fetchall()
-        
+        query = select( Follower ).distinct().join(
+            BloodOath, Follower.id == BloodOath.follower_id
+        ).where(
+            BloodOath.cult_id.in_(subquery)
+        ).where( Follower.id != self.id )
+
+        results = session.execute( query ).fetchall()
+        return [ result_tuple[0] for result_tuple in results ]
