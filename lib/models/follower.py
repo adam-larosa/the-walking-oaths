@@ -40,15 +40,18 @@ class Follower( Base ):
 
 
 
-
+    def join_cult( self, cult, time = 'right now' ):
+        from .cult import Cult
+        if isinstance( cult, Cult ):
+            if self.age >= cult.minimum_age:
+                self.cults.append( cult )
+                session.commit()
+            else:
+                print( 'We must wait a bit longer before we are ready' )
+        else:
+            return 'Argument not Cult object.'
 
 
     @classmethod
     def all( cls ):
         return session.query( cls ).all()
-
-
-
-
-    def join_cult( self, new_cult ):
-        pass
