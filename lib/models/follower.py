@@ -72,6 +72,13 @@ class Follower:
         for cult in self.cults:
             print( cult.slogan )
 
+
+
+
+
+
+
+
     @classmethod
     def most_active( cls ):
         return max( cls.all, key = lambda f : len( f.cults ) )
