@@ -36,6 +36,22 @@ class Follower:
 
 
 
+
+
+
+
+
+
+
+    @classmethod
+    def all( cls ):
+        return cls.all
+
+
+
+
+
+
     def join_cult( self, cult, time = 'right now' ):
         from .cult import Cult
         if isinstance( cult, Cult ):
