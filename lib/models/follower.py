@@ -59,7 +59,6 @@ class Follower:
 
 
 
-
     
     @classmethod
     def of_a_certain_age( cls, query ):
