@@ -50,8 +50,6 @@ class Follower:
 
 
 
-
-
     def join_cult( self, cult, time = 'right now' ):
         from .cult import Cult
         if isinstance( cult, Cult ):
