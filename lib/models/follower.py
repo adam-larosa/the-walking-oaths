@@ -115,15 +115,13 @@ class Follower( Base ):
         return query.all()
 
     @property
-    def fellow_cult_members( self ):
-        sql = '''
-            SELECT DISTINCT followers.* FROM followers
-            JOIN blood_oaths ON followers.id = blood_oaths.follower_id
-            WHERE blood_oaths.cult_id IN (
-                SELECT cult_id FROM blood_oaths WHERE follower_id = ?
-            )
-            AND followers.id <> ?
-        '''
-        rows_from_db = cursor.execute( sql, ( self.id, self.id ) ).fetchall()
-        return [ Follower.new_from_db( row ) for row in rows_from_db ]
+    def fellow_cult_members(self):
+        subquery = select(BloodOath.cult_id).where(BloodOath.follower_id == self.id).subquery()
 
+        query = select(Follower).distinct().\
+            join(BloodOath, Follower.id == BloodOath.follower_id).\
+            where(BloodOath.cult_id.in_(subquery)).\
+            where(Follower.id != self.id)
+        
+        return session.execute(query).fetchall()
+        
