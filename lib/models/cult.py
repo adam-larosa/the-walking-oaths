@@ -144,8 +144,3 @@ class Cult:
             else:
                 count[ cult.location ] = 1
         return max( count, key = count.get )
-
-
-
-
-              
