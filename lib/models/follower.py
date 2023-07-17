@@ -93,6 +93,7 @@ class Follower:
         row = cursor.execute( sql ).fetchone()
         return cls.new_from_db( row )
         
+        
     @classmethod
     def top_ten( cls ):
         sql = '''
