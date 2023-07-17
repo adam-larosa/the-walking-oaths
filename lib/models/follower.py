@@ -64,6 +64,9 @@ class Follower:
     def of_a_certain_age( cls, query ):
         return [ f for f in cls.all if f.age >= query ]
 
+
+
+
     @property
     def my_cults_slogans( self ):
         for cult in self.cults:
