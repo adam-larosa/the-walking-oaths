@@ -62,6 +62,15 @@ class Cult:
 
 
 
+
+
+
+
+
+
+
+
+
     @classmethod
     def find_by_name( cls, query ):
         for cult in cls.all:
