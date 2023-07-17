@@ -83,6 +83,21 @@ class Follower:
     def most_active( cls ):
         return max( cls.all, key = lambda f : len( f.cults ) )
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     @classmethod
     def top_ten( cls ):
         by_cults = lambda f : len(f.cults)
