@@ -19,6 +19,8 @@ class Cult( Base ):
     minimum_age = Column( Integer() )
 
     
+
+    
     oaths = relationship( 'BloodOath', cascade = 'all, delete-orphan' )
 
 
