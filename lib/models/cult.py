@@ -148,13 +148,13 @@ class Cult:
         return query_tuple[0]
 
 
+    # the remaining methods are for database administration
+
     @classmethod
     def new_from_db( cls, row ):
         cult = cls( row[1], row[2], row[3], row[4], row[5] )
         cult.id = row[0]
         return cult
-
-
 
     @classmethod
     def create( cls, name, location, founding_year, slogan, minimum_age ):
@@ -177,7 +177,6 @@ class Cult:
         connection.commit()
         id_sql = 'SELECT last_insert_rowid() FROM cults'
         self.id = cursor.execute( id_sql ).fetchone()[0]
-
 
     @classmethod
     def create_table( cls ):
