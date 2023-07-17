@@ -114,6 +114,7 @@ class Follower:
 
 
 
+
     @property
     def fellow_cult_members( self ):
         fellows = set()
