@@ -52,8 +52,6 @@ class Cult( Base ):
             return 'Argument not valid Follower instance.'
 
 
-
-
     @property
     def cult_population(self):
         query = session.query( func.count( distinct( BloodOath.follower_id ) ) )
