@@ -107,6 +107,7 @@ class Cult:
         query_tuple = cursor.execute( sql, ( self.id, ) ).fetchone()
         return query_tuple[0]
 
+
     @property
     def my_followers_mottos( self ):
         sql = '''
