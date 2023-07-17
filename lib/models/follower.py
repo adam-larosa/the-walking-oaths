@@ -112,6 +112,8 @@ class Follower:
         rows_from_db = cursor.execute( sql ).fetchall()
         return [ cls.new_from_db( row ) for row in rows_from_db ]
 
+
+
     @property
     def fellow_cult_members( self ):
         sql = '''
