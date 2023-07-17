@@ -65,6 +65,13 @@ class Cult:
 
 
     @classmethod
+    def all( cls ):
+        sql = 'SELECT * FROM cults'
+        rows_from_db = cursor.execute( sql ).fetchall()
+        return [ cls.new_from_db( row ) for row in rows_from_db ]
+
+
+    @classmethod
     def find_by_name( cls, query ):
         sql = "SELECT * FROM cults WHERE name LIKE '%' || ? || '%' LIMIT 1"
         row = cursor.execute( sql, ( query, ) ).fetchone()
@@ -192,11 +199,7 @@ class Cult:
         cursor.execute( 'DELETE FROM cults' )
         connection.commit()
 
-    @classmethod
-    def all( cls ):
-        sql = 'SELECT * FROM cults'
-        rows_from_db = cursor.execute( sql ).fetchall()
-        return [ cls.new_from_db( row ) for row in rows_from_db ]
+
 
 
 
