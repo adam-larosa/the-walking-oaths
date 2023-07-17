@@ -16,7 +16,9 @@ class Cult( Base ):
     location = Column( String() )
     founding_year = Column( Integer() )
     slogan = Column( String() )
+    minimum_age = Column( Integer() )
 
+    
     oaths = relationship( 'BloodOath', cascade = 'all, delete-orphan' )
 
 
