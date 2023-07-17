@@ -61,5 +61,5 @@ class Follower( Base ):
 
 
     @classmethod
-    def of_a_certain_age( cls, query ):
-        return session.query( cls ).filter( )
+    def of_a_certain_age( cls, age_query ):
+        return session.query( cls ).filter( cls.age >= age_query )
