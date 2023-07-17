@@ -94,6 +94,10 @@ class Follower:
         return cls.new_from_db( row )
         
         
+
+
+
+        
     @classmethod
     def top_ten( cls ):
         sql = '''
