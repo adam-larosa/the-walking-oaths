@@ -1,4 +1,4 @@
-from sqlalchemy import func, distinct, Column, Integer, String
+from sqlalchemy import asc, func, distinct, Column, Integer, String
 # Hoping to start our BloodOath program the same way for each branch, things
 if 'lib' in __name__ : # got fun when files were being loaded by alembic in
     from lib.walkingdev import Base, session # the lib directory, when in root  
@@ -114,3 +114,21 @@ class Cult( Base ):
         query = session.query( Follower.life_motto )
         by_followers = query.filter( Follower.oaths.any( cult_id = self.id ) )
         return [ query_tuple[0] for query_tuple in by_followers.all() ]
+
+
+
+
+
+
+    @classmethod
+    def least_popular(cls):
+        query = session.query( 
+            cls, 
+            func.count( BloodOath.follower_id ).label( 'follower_count' ) 
+        )
+        with_cults = query.outerjoin( BloodOath, BloodOath.cult_id == cls.id )
+        result = with_cults.group_by( cls.id )
+        cult = result.order_by( asc( 'follower_count' ) ).first()
+        if cult:
+            return cult[0]  # order_by will return a tuple
+        return None
