@@ -110,5 +110,7 @@ class Cult( Base ):
 
     @property
     def my_followers_mottos( self ):
-        query = session.query( Follower.motto )
-        return query.filter( Follower.oaths.any( cult_id = self.id ) ).all()
+        from .follower import Follower
+        query = session.query( Follower.life_motto )
+        by_followers = query.filter( Follower.oaths.any( cult_id = self.id ) )
+        return [ query_tuple[0] for query_tuple in by_followers.all() ]
