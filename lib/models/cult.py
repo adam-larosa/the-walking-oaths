@@ -71,6 +71,8 @@ class Cult:
         return [ cls.new_from_db( row ) for row in rows_from_db ]
 
 
+
+
     @classmethod
     def find_by_name( cls, query ):
         sql = "SELECT * FROM cults WHERE name LIKE '%' || ? || '%' LIMIT 1"
