@@ -89,6 +89,7 @@ class Cult:
         rows_from_db = cursor.execute( sql, ( query, ) ).fetchall()
         return [ cls.new_from_db( row ) for row in rows_from_db ] 
 
+
     @classmethod
     def find_by_founding_year( cls, query ):
         sql = "SELECT * FROM cults WHERE founding_year = ?"
