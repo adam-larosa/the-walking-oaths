@@ -96,6 +96,7 @@ class Cult:
         rows_from_db = cursor.execute( sql, ( query, ) ).fetchall()
         return [ cls.new_from_db( row ) for row in rows_from_db ]
 
+
     @property
     def average_age( self ):
         sql = '''
