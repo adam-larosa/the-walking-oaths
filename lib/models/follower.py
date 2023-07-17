@@ -40,6 +40,15 @@ class Follower:
         return [ Cult.new_from_db( row ) for row in rows_from_db ]
 
 
+    def join_cult( self, cult, time = 'right now' ):
+        from .cult import Cult
+        if isinstance( cult, Cult ):
+            if self.age >= cult.minimum_age:
+                BloodOath.create( time, cult.id, self.id )
+            else:
+                print( 'We must wait a bit longer before we are ready' )
+        else:
+            return 'Argument not Cult object.'
 
 
     
@@ -50,15 +59,7 @@ class Follower:
         return [ cls.new_from_db( row ) for row in rows_from_db ]
 
 
-    def join_cult( self, cult, time = 'right now' ):
-        from .cult import Cult
-        if isinstance( cult, Cult ):
-            if self.age >= cult.minimum_age:
-                BloodOath.create( time, cult.id, self.id )
-            else:
-                print( 'We must wait a bit longer before we are ready' )
-        else:
-            return 'Argument not Cult object.'
+
 
     @classmethod
     def of_a_certain_age( cls, query ):
