@@ -132,3 +132,17 @@ class Cult( Base ):
         if cult:
             return cult[0]  # order_by will return a tuple
         return None
+
+
+
+    @classmethod
+    def most_common_location(cls):
+        result = (
+            session.query( cls.location, func.count('*').label( 'cult_amount' ) )
+            .group_by( cls.location )
+            .order_by( desc( 'cult_amount' ) )
+            .first()
+        )
+        if result:
+            return result[0]  # return the location, not the count
+        return None
