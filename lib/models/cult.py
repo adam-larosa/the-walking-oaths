@@ -80,9 +80,7 @@ class Cult:
                 return cult
         return 'Cult not found'
 
-    @classmethod
-    def find_all_by_name( cls, query ):
-        return [ c for c in cls.all if query.lower() in c.name.lower() ]    
+   
 
     @classmethod
     def find_by_location( cls, query ):
