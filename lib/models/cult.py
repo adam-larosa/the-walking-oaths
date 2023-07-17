@@ -52,74 +52,6 @@ class Cult:
 
 
 
-    @classmethod
-    def new_from_db( cls, row ):
-        cult = cls( row[1], row[2], row[3], row[4], row[5] )
-        cult.id = row[0]
-        return cult
-
-
-
-    @classmethod
-    def create( cls, name, location, founding_year, slogan, minimum_age ):
-        cult = cls( name, location, founding_year, slogan, minimum_age )
-        cult.save
-        return cult
-
-    @property
-    def save( self ):
-        sql = '''
-            INSERT INTO cults ( 
-                name, location, founding_year, slogan, minimum_age 
-            ) VALUES ( ?, ?, ?, ?, ? )
-        '''
-        params_tuple = ( 
-            self.name, self.location, self.founding_year, self.slogan, 
-            self.minimum_age 
-        )
-        cursor.execute( sql, params_tuple )
-        connection.commit()
-        id_sql = 'SELECT last_insert_rowid() FROM cults'
-        self.id = cursor.execute( id_sql ).fetchone()[0]
-
-
-    @classmethod
-    def create_table( cls ):
-        sql = '''
-            CREATE TABLE IF NOT EXISTS cults ( 
-                id INTEGER PRIMARY KEY,
-                name TEXT,
-                location TEXT,
-                founding_year INTEGER,
-                slogan TEXT,
-                minimum_age INTEGER
-            )
-        '''
-        cursor.execute( sql )
-
-    @classmethod
-    def drop_table( cls ):
-        cursor.execute( 'DROP TABLE cults' )
-
-    @classmethod
-    def erase_table( cls ):
-        cursor.execute( 'DELETE FROM cults' )
-        connection.commit()
-
-    @classmethod
-    def all( cls ):
-        sql = 'SELECT * FROM cults'
-        rows_from_db = cursor.execute( sql ).fetchall()
-        return [ cls.new_from_db( row ) for row in rows_from_db ]
-
-
-
-
-
-
-
-    
-
     @property
     def cult_population( self ):
         sql = '''
@@ -129,7 +61,9 @@ class Cult:
         '''
         query_tuple = cursor.execute( sql, ( self.id, ) ).fetchone()
         return query_tuple[0]
-        
+
+
+
     @classmethod
     def find_by_name( cls, query ):
         sql = "SELECT * FROM cults WHERE name LIKE '%' || ? || '%' LIMIT 1"
@@ -202,3 +136,72 @@ class Cult:
         '''
         query_tuple = cursor.execute( sql ).fetchone()
         return query_tuple[0]
+
+
+    @classmethod
+    def new_from_db( cls, row ):
+        cult = cls( row[1], row[2], row[3], row[4], row[5] )
+        cult.id = row[0]
+        return cult
+
+
+
+    @classmethod
+    def create( cls, name, location, founding_year, slogan, minimum_age ):
+        cult = cls( name, location, founding_year, slogan, minimum_age )
+        cult.save
+        return cult
+
+    @property
+    def save( self ):
+        sql = '''
+            INSERT INTO cults ( 
+                name, location, founding_year, slogan, minimum_age 
+            ) VALUES ( ?, ?, ?, ?, ? )
+        '''
+        params_tuple = ( 
+            self.name, self.location, self.founding_year, self.slogan, 
+            self.minimum_age 
+        )
+        cursor.execute( sql, params_tuple )
+        connection.commit()
+        id_sql = 'SELECT last_insert_rowid() FROM cults'
+        self.id = cursor.execute( id_sql ).fetchone()[0]
+
+
+    @classmethod
+    def create_table( cls ):
+        sql = '''
+            CREATE TABLE IF NOT EXISTS cults ( 
+                id INTEGER PRIMARY KEY,
+                name TEXT,
+                location TEXT,
+                founding_year INTEGER,
+                slogan TEXT,
+                minimum_age INTEGER
+            )
+        '''
+        cursor.execute( sql )
+
+    @classmethod
+    def drop_table( cls ):
+        cursor.execute( 'DROP TABLE cults' )
+
+    @classmethod
+    def erase_table( cls ):
+        cursor.execute( 'DELETE FROM cults' )
+        connection.commit()
+
+    @classmethod
+    def all( cls ):
+        sql = 'SELECT * FROM cults'
+        rows_from_db = cursor.execute( sql ).fetchall()
+        return [ cls.new_from_db( row ) for row in rows_from_db ]
+
+
+
+
+
+
+
+    
