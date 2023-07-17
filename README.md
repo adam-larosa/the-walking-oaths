@@ -1,4 +1,4 @@
-Blood Oath Lab
+Blood Oath Lab, the Rosetta Stone edition!
 ==============
 ### This repo has branches for:
   - `objects` : Rembering objects
