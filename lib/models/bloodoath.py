@@ -50,7 +50,10 @@ class BloodOath:
         row = cursor.execute( sql ).fetchone()
         return Follower.new_from_db( row )
 
-        
+
+    # the additional remaning methods are needed to work with the database
+    # as well at create an instance of BloodOath from a tuple of attributes
+
 
     @classmethod
     def create( cls, initiation_date, cult_id, follower_id ):
@@ -69,8 +72,6 @@ class BloodOath:
         id_sql = 'SELECT last_insert_rowid() FROM blood_oaths'
         self.id = cursor.execute( id_sql ).fetchone()[0]
 
-
-    
     @classmethod
     def new_from_db( cls, row ):
         oath = cls( row[1], row[2], row[3] )
@@ -97,9 +98,3 @@ class BloodOath:
     def erase_table( cls ):
         cursor.execute( 'DELETE FROM blood_oaths' )
         connection.commit()
-
-
-
-
-
-        
