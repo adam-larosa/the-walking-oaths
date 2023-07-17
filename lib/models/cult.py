@@ -94,3 +94,11 @@ class Cult( Base ):
     def find_by_founding_year( cls, search_year ):
         query = session.query( cls )
         return query.filter( cls.founding_year == search_year ).all()
+
+
+
+    @property
+    def average_age( self ):
+        query = session.query( func.avg( Follower.age ) ).join( self.oaths )
+        return query.join( Follower ).scalar()
+    
