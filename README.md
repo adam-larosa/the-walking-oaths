@@ -1,6 +1,13 @@
-Blood Oath Lab
+Blood Oath Lab, the Rosetta Stone edition!
 ==============
+### This repo has branches for:
+  - `objects` : Rembering objects
+  - `orm`: refactored with our own SQL statments
+  - `alchemy` : allowing SQLAlchemy to write our SQL
 
+Switching to a different branch will show us the same 
+bit of functionality, but done different ways!
+---
 In this project, we will be practicing object relationships in Python, with a particular emphasis on the `has many` `through` relationship (aka: many-to-many). Please read the whole README before writing any code!
 
 ## Introduction
