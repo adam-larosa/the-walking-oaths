@@ -129,6 +129,8 @@ class Follower:
         return [ Follower.new_from_db( row ) for row in rows_from_db ]
 
 
+    # the following methods are required for database administration
+
     @property
     def save( self ):
         sql = '''
@@ -150,9 +152,6 @@ class Follower:
         follower = cls( row[1], row[2], row[3] )
         follower.id = row[0]
         return follower
-
-
-
 
     @classmethod
     def create_table( cls ):
