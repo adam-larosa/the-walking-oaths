@@ -55,3 +55,11 @@ class Follower( Base ):
     @classmethod
     def all( cls ):
         return session.query( cls ).all()
+
+
+
+
+
+    @classmethod
+    def of_a_certain_age( cls, query ):
+        return session.query( cls ).filter( )
