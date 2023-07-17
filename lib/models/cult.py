@@ -91,6 +91,6 @@ class Cult( Base ):
 
 
     @classmethod
-    def find_by_founding_year( cls, query ):
+    def find_by_founding_year( cls, search_year ):
         query = session.query( cls )
-        return query.filter( cls.year == query ).all()
+        return query.filter( cls.founding_year == search_year ).all()
