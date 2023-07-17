@@ -1,5 +1,5 @@
 from .bloodoath import BloodOath
-from .follower import Follower
+
 
 
 
@@ -41,6 +41,7 @@ class Cult:
     
     
     def recruit_follower( self, follower, time = 'right now' ):
+        from .follower import Follower
         if isinstance( follower, Follower ):
             if follower.age >= self.minimum_age:
                 BloodOath( time, self, follower )
