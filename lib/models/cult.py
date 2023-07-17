@@ -198,13 +198,3 @@ class Cult:
     def erase_table( cls ):
         cursor.execute( 'DELETE FROM cults' )
         connection.commit()
-
-
-
-
-
-
-
-
-
-    
