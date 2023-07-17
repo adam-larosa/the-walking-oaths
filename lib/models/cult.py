@@ -71,6 +71,8 @@ class Cult( Base ):
 
 
 
+
+
     @classmethod
     def find_by_name( cls, search ):
         query = session.query( cls ).filter( cls.name.ilike( f'%{search}%' ) )
