@@ -79,6 +79,8 @@ class Cult:
             return cls.new_from_db( row )
         return 'Cult not found'
 
+
+
     @classmethod
     def find_all_by_name( cls, query ):
         sql = "SELECT * FROM cults WHERE name LIKE '%' || ? || '%'"
