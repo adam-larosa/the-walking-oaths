@@ -88,3 +88,9 @@ class Cult( Base ):
         query = session.query( cls )
         by_location = query.filter( cls.location.ilike( f'%{search}%' ) )
         return by_location.all()
+
+
+    @classmethod
+    def find_by_founding_year( cls, query ):
+        query = session.query( cls )
+        return query.filter( cls.year == query ).all()
