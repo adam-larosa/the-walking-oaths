@@ -64,7 +64,9 @@ class Cult:
 
 
 
-
+    @classmethod
+    def all( cls ):
+        return cls.all
 
 
 
