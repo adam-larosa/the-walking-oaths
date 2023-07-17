@@ -81,6 +81,7 @@ class Cult:
         return 'Cult not found'
 
    
+   
 
     @classmethod
     def find_by_location( cls, query ):
