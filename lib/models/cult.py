@@ -134,6 +134,7 @@ class Cult:
         row = cursor.execute( sql ).fetchone()
         return cls.new_from_db( row )
 
+
     @classmethod
     def most_common_location( cls ):
         sql = '''
