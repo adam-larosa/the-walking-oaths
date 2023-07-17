@@ -73,3 +73,22 @@ class Follower( Base ):
         query = session.query( Cult.slogan )
         by_follower = query.filter( Cult.oaths.any( follower_id = self.id ) )
         return [ result_tuple[0] for result_tuple in by_follower.all() ]
+
+
+
+
+
+
+    @classmethod
+    def most_active( cls ):
+        sql = '''
+            SELECT followers.*, 
+            COUNT( DISTINCT blood_oaths.cult_id ) AS active_most
+            FROM followers 
+            JOIN blood_oaths ON followers.id = blood_oaths.follower_id
+            GROUP BY followers.id, followers.name
+            ORDER BY active_most DESC
+            LIMIT 1;
+        '''
+        row = cursor.execute( sql ).fetchone()
+        return cls.new_from_db( row )
