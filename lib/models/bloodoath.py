@@ -38,8 +38,6 @@ class BloodOath:
 
 
 
-
-    
     
     @classmethod
     def first_oath( cls ):
