@@ -9,6 +9,7 @@ from .bloodoath import BloodOath
 
 
 class Cult:
+
     def __init__( self, name, location, founding_year, slogan, minimum_age, 
                   id = None ):
         self.name = name
@@ -17,7 +18,6 @@ class Cult:
         self.slogan = slogan
         self.minimum_age = minimum_age
         self.id = id
-
 
 
     @property
