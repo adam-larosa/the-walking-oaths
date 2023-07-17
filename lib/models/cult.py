@@ -100,5 +100,6 @@ class Cult( Base ):
     @property
     def average_age( self ):
         from .follower import Follower
-        return session.query(func.avg(Follower.age)).filter(Follower.oaths.any(cult_id=self.id)).scalar()
+        query = session.query( func.avg( Follower.age ) )
+        return query.filter( Follower.oaths.any( cult_id = self.id ) ).scalar()
     
